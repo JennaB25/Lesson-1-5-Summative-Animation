@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Lesson_1_5_Summative_Animation
 {
@@ -20,6 +20,10 @@ namespace Lesson_1_5_Summative_Animation
         Rectangle deloreanRect4;
         Rectangle deloreanRect5;
         Rectangle deloreanRect6;
+        SoundEffect quoteSound;
+        SoundEffectInstance quoteSEI;
+        SoundEffect music;
+        SoundEffectInstance musicSEI;
         float seconds;
         float startTime;
         bool quote;
@@ -65,7 +69,7 @@ namespace Lesson_1_5_Summative_Animation
             deloreanRect4 = new Rectangle(200, 50, 400, 390);
             deloreanRect5 = new Rectangle(170, 50, 500, 490);
             deloreanRect6 = new Rectangle(120, 30, 600, 590);
-            bubbleRect = new Rectangle(450, 50, 350, 70);
+            bubbleRect = new Rectangle(450, 50, 360, 70);
             screen = Screen.Intro;
 
             base.Initialize();
@@ -81,6 +85,11 @@ namespace Lesson_1_5_Summative_Animation
             bubbleTexture = Content.Load<Texture2D>("bubble");
             mainBackgroundTexture = Content.Load<Texture2D>("mainBackground");
             deloreanTexture = Content.Load<Texture2D>("delorean");
+            quoteSound = Content.Load<SoundEffect>("quoteSound");
+            music = Content.Load<SoundEffect>("music");
+            musicSEI = music.CreateInstance();
+            quoteSEI = quoteSound.CreateInstance();
+            quoteSEI.IsLooped = false;
 
         }
         protected override void Update(GameTime gameTime)
@@ -88,6 +97,7 @@ namespace Lesson_1_5_Summative_Animation
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            musicSEI.Play();
             mouseState = Mouse.GetState();
             seconds = (float)gameTime.TotalGameTime.TotalSeconds - startTime;
 
@@ -124,7 +134,11 @@ namespace Lesson_1_5_Summative_Animation
             }
             else if (screen == Screen.MainScreen6)
             {
-                quote = true;               
+                musicSEI.Pause();
+                quoteSEI.Play();
+                quote = true;
+                if (seconds >= 6.5)
+                    musicSEI.Play();
                 if (mouseState.LeftButton == ButtonState.Pressed)
                     screen = Screen.End;                   
             }
@@ -177,7 +191,7 @@ namespace Lesson_1_5_Summative_Animation
                 if (quote)
                 {
                     _spriteBatch.Draw(bubbleTexture, bubbleRect, Color.White);
-                    _spriteBatch.DrawString(quoteFont, "Where were going we don't need roads...", new Vector2(480, 68), Color.Black);                 
+                    _spriteBatch.DrawString(quoteFont, "Roads, where were going we don't need roads...", new Vector2(480, 68), Color.Black);                 
                 }
             }
             else if (screen == Screen.End)

@@ -61,12 +61,24 @@
 /processorParam:TextureFormat=Color
 /build:mainBackground.png
 
+#begin music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music.wav
+
 #begin quote.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:quote.spritefont
+
+#begin quoteSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:quoteSound.wav
 
 #begin title.spritefont
 /importer:FontDescriptionImporter
