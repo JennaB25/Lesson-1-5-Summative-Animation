@@ -91,8 +91,9 @@ namespace Lesson_1_5_Summative_Animation
             deloreanTexture = Content.Load<Texture2D>("delorean");
             quoteSound = Content.Load<SoundEffect>("quoteSound");
             music = Content.Load<SoundEffect>("music");
-            musicSEI = music.CreateInstance();
+            musicSEI = music.CreateInstance();       
             quoteSEI = quoteSound.CreateInstance();
+            quoteSEI.Volume = 5f;
             quoteSEI.IsLooped = false;
 
         }
