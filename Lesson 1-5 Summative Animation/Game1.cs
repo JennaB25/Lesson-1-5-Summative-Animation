@@ -93,7 +93,7 @@ namespace Lesson_1_5_Summative_Animation
             music = Content.Load<SoundEffect>("music");
             musicSEI = music.CreateInstance();       
             quoteSEI = quoteSound.CreateInstance();
-            quoteSEI.Volume = 5f;
+            quoteSEI.Volume = 0.5f;
             quoteSEI.IsLooped = false;
 
         }
@@ -211,10 +211,7 @@ namespace Lesson_1_5_Summative_Animation
                 _spriteBatch.Draw(endScreenTexture, endScreenRect, Color.White);
                 _spriteBatch.DrawString(titleFont, "Created By: Jenna B", new Vector2(290, 500), Color.Black);
                 _spriteBatch.DrawString(quoteFont,"Press E to Exit", new Vector2(690, 580), Color.Black);
-            }
-            
-                
-
+            }         
             _spriteBatch.End();
 
 
