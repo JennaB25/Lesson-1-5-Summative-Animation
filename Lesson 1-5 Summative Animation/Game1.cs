@@ -94,6 +94,7 @@ namespace Lesson_1_5_Summative_Animation
             musicSEI = music.CreateInstance();       
             quoteSEI = quoteSound.CreateInstance();
             quoteSEI.Volume = 0.5f;
+            musicSEI.Volume = 0.5f;
             quoteSEI.IsLooped = false;
 
         }
