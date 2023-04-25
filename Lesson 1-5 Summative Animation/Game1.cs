@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
 
 namespace Lesson_1_5_Summative_Animation
 {
@@ -11,6 +11,8 @@ namespace Lesson_1_5_Summative_Animation
         Rectangle introRect;
         Texture2D mainBackgroundTexture;
         Rectangle mainBackgroundRect;
+        Texture2D endScreenTexture;
+        Rectangle endScreenRect;
         Texture2D deloreanTexture;
         Texture2D bubbleTexture;
         Rectangle bubbleRect;
@@ -69,7 +71,8 @@ namespace Lesson_1_5_Summative_Animation
             deloreanRect4 = new Rectangle(200, 50, 400, 390);
             deloreanRect5 = new Rectangle(170, 50, 500, 490);
             deloreanRect6 = new Rectangle(120, 30, 600, 590);
-            bubbleRect = new Rectangle(450, 50, 360, 70);
+            bubbleRect = new Rectangle(445, 50, 365, 70);
+            endScreenRect = new Rectangle(0, 0, 800, 600);
             screen = Screen.Intro;
 
             base.Initialize();
@@ -84,6 +87,7 @@ namespace Lesson_1_5_Summative_Animation
             introTexture = Content.Load<Texture2D>("bttfBackground");
             bubbleTexture = Content.Load<Texture2D>("bubble");
             mainBackgroundTexture = Content.Load<Texture2D>("mainBackground");
+            endScreenTexture = Content.Load<Texture2D>("endScreenImage");
             deloreanTexture = Content.Load<Texture2D>("delorean");
             quoteSound = Content.Load<SoundEffect>("quoteSound");
             music = Content.Load<SoundEffect>("music");
@@ -102,10 +106,13 @@ namespace Lesson_1_5_Summative_Animation
             seconds = (float)gameTime.TotalGameTime.TotalSeconds - startTime;
 
             if (screen == Screen.Intro)
-            {
-                if (mouseState.LeftButton == ButtonState.Pressed)
+            {              
+                if (Keyboard.GetState().IsKeyDown(Keys.E))
                     screen = Screen.MainScreen;
                     startTime = (float)gameTime.TotalGameTime.TotalSeconds;
+
+                if (musicSEI.State == SoundState.Stopped)
+                    screen = Screen.MainScreen;
             }
             else if (screen == Screen.MainScreen)
             {           
@@ -138,13 +145,16 @@ namespace Lesson_1_5_Summative_Animation
                 quoteSEI.Play();
                 quote = true;
                 if (seconds >= 6.5)
+                {
                     musicSEI.Play();
-                if (mouseState.LeftButton == ButtonState.Pressed)
-                    screen = Screen.End;                   
+                    screen = Screen.End;
+                }
+                                      
             }
             else if (screen == Screen.End)
             {
-                //
+                if (Keyboard.GetState().IsKeyDown(Keys.E))
+                    Exit();
             }
 
             base.Update(gameTime);
@@ -157,7 +167,8 @@ namespace Lesson_1_5_Summative_Animation
             _spriteBatch.Begin();
             if (screen == Screen.Intro)
             {
-                _spriteBatch.Draw(introTexture, introRect, Color.White);            
+                _spriteBatch.Draw(introTexture, introRect, Color.White);
+                _spriteBatch.DrawString(titleFont, "Press E To Continue", new Vector2(500, 450), Color.LightSkyBlue);   
             }
             else if (screen == Screen.MainScreen)
             {
@@ -191,12 +202,14 @@ namespace Lesson_1_5_Summative_Animation
                 if (quote)
                 {
                     _spriteBatch.Draw(bubbleTexture, bubbleRect, Color.White);
-                    _spriteBatch.DrawString(quoteFont, "Roads, where were going we don't need roads...", new Vector2(480, 68), Color.Black);                 
+                    _spriteBatch.DrawString(quoteFont, "Roads, where were going we don't need roads...", new Vector2(470, 68), Color.Black);                 
                 }
             }
             else if (screen == Screen.End)
             {
-                _spriteBatch.DrawString(titleFont, "Goodbye!", new Vector2(190, 515), Color.White);
+                _spriteBatch.Draw(endScreenTexture, endScreenRect, Color.White);
+                _spriteBatch.DrawString(titleFont, "Created By: Jenna B", new Vector2(290, 500), Color.Black);
+                _spriteBatch.DrawString(quoteFont,"Press E to Exit", new Vector2(690, 580), Color.Black);
             }
             
                 
